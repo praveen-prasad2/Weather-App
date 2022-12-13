@@ -1,12 +1,21 @@
 let button=document.querySelector("#kochi")
 let kochitemp=document.querySelector("#kochitemp")
-button.addEventListener("click",function(){
-    fetchWeather(9.94,76.26, ' Kochi')
-    })
-function fetchWeather(latitude,longitude,place){
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`)
+let calicut=document.querySelector("#calicut")
+let clttemp=document.querySelector("#clttemp")
+function fetchWeather(latitude,longitude){
+    return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`)
     .then(Response=>Response.json())
-    .then(json=>{
-        kochitemp.innerHTML=json.current_weather.temperature+place
-    })
+    .then(json=>json.current_weather.temperature)
 }
+
+
+
+
+button.addEventListener("click",async function(){
+    let temp =await fetchWeather(9.94,76.26)
+    kochitemp.innerHTML=temp
+    })
+calicut.addEventListener("click",async function(){
+   let temp=await fetchWeather(11.14,75.96)
+   clttemp.innerHTML=temp
+    })
